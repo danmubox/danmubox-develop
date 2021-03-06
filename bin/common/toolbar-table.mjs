@@ -63,21 +63,6 @@ const TaskStateResolver = {
 };
 
 /**
- * 服务器数组
- */
-const ServerArray = [
-    { name: "未知", value: "unknown" },
-    { name: "bilibili", value: "chat.bilibili.com" },
-    { name: "AcFun", value: "danmu.aixifan.com" },
-    { name: "第一弹", value: "api.diyidan.net" },
-    { name: "动画疯", value: "ani.gamer.com.tw" },
-    { name: "爱奇艺", value: "cmts.iqiyi.com" },
-    { name: "优酷", value: "service.danmu.youku.com" },
-    { name: "腾讯", value: "mfm.video.qq.com" },
-    { name: "搜狐", value: "api.danmu.tv.sohu.com" }
-];
-
-/**
  * 项来源解析器
  */
 const ItemOriginResolver = {
@@ -97,7 +82,7 @@ const ItemOriginResolver = {
 
         } else {
 
-            for (let it of ServerArray) {
+            for (let it of ChatServerArray) {
 
                 if (it.value == value) {
 
@@ -127,7 +112,8 @@ class ToolbarTable {
         // 表格容器
         this.$table = $(`#${module} .table`);
 
-        this.$table.bootstrapTable({
+        // 解决偶发性国际化失效的bug
+        this.$table.bootstrapTable('refreshOptions', {
             locale: "zh-CN"
         });
 

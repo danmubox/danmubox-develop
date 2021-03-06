@@ -39,7 +39,7 @@ $(() => {
     $accordion.data("module", module);
 
     // 初始化弹幕服务器
-    ServerArray.forEach(it =>
+    ChatServerArray.forEach(it =>
         $slt_danmu_server.append(`<option value="${it.value}">${it.name}</option>`)
     );
 

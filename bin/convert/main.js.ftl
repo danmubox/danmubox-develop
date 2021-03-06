@@ -1,4 +1,5 @@
 <#include "/bin/common/common.mjs" parse=false>
+<#include "/bin/common/chat-servers.mjs" parse=false>
 <#include "/bin/common/toolbar-table.mjs" parse=false>
 <#include "/bin/common/modal-drag.mjs" parse=false>
 <#include "/bin/common/drag-table-helper.mjs" parse=false>

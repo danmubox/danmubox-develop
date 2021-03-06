@@ -12,7 +12,7 @@ const Common = (() => {
 
     /**
      * 计算文件大小
-     * @param  {数字} value 文件长度
+     * @param  {数字} value   文件长度
      * @return {字符串}       含有合适单位的魏就大小
      */
     function renderSize(value) {

@@ -5,12 +5,12 @@ $(() => {
 
     const cookie = "search";
 
-    // 文本框
-    const $txt_keyword = $("#txt-keyword");
-
+    const $danmuku_number = $("#danmuku-number"); // 弹幕库数量
+    const $txt_keyword = $("#txt-keyword"); // 文本框
     const $table = $('#table');
     const $ckb_copy = $("#ckb-copy");
     const $main_form = $("#main-form");
+    const $btn_search = $("#btn-search");
 
     // 是否需要提示弹幕包
     let is_tip_danmupkg = true;
@@ -34,26 +34,58 @@ $(() => {
 
     /**
      * 更新数据
-     * @param  {数组} rows 待更新行
+     * @param {数组} rows          待更新行
+     * @param {整型} danmukuNumber 弹幕库数量
      */
-    function updateData(rows) {
+    function updateData(rows, danmukuNumber) {
 
-        rows.forEach(it => isTipDanMuPackage(it.name));
+        if (rows == undefined) { // 更新弹幕库数量
 
-        $table.bootstrapTable('append', rows);
-        $table.bootstrapTable('hideLoading');
+            $danmuku_number.text(`已收录弹幕：${danmukuNumber.toLocaleString()}`);
+
+        } else { // 更新表格数据
+
+            rows.forEach(it => isTipDanMuPackage(it.name));
+            $table.bootstrapTable('append', rows);
+            $table.bootstrapTable('hideLoading');
+        }
     }
+
 
     /**
      * 搜索完成回调
+     * @param {文本} keyword          关键字
+     * @param {整型} danmukuLength    弹幕库大小
      */
-    function searchCallback() {
+    function searchCallback(keyword, danmukuLength) {
+
+        const length = $table.bootstrapTable('getData').length;
+        if (length == 0)
+            $("tr.no-records-found td").text(`未找到包含 "${keyword}" 的相关结果。`);
+
+        if ($danmuku_number.attr('title') == undefined) {
+
+            const prettifyLength = Common.renderSize(danmukuLength);
+            $danmuku_number.attr('title', `合计：${prettifyLength}`);
+            $danmuku_number.attr('data-toggle', 'tooltip');
+            $danmuku_number.attr('data-placement', 'top');
+            $danmuku_number.tooltip();
+        }
 
         $table.bootstrapTable('hideLoading');
         $main_form.attr("disabled", false);
     }
 
-    $("#btn-search").click(function() {
+    // 注册文本框变化监听
+    $txt_keyword.bind("input propertychange", () => {
+
+        const flag = $txt_keyword.val().trim() == 0;
+
+        $btn_search.attr("disabled", flag);
+    });
+
+    // 注册搜索按钮点击事件
+    $btn_search.click(() => {
 
         $table.bootstrapTable('removeAll');
 
@@ -68,5 +100,9 @@ $(() => {
             Searcher.search(keyword.toLowerCase(), updateData, searchCallback);
         }
     });
-});
 
+    // 解决偶发性国际化失效的bug
+    $table.bootstrapTable('refreshOptions', {
+        locale: "zh-CN"
+    });
+});

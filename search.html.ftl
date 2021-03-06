@@ -7,10 +7,13 @@
 <form class="mb-0">
     <fieldset id="main-form" class="form-group mb-0">
         <div class="form-group">
+            <p class="float-right mb-1">
+                <small id="danmuku-number" class="text-muted">&nbsp;</small>
+            </p>
             <div class="input-group mb-1">
                 <input id="txt-keyword" type="text" class="form-control" placeholder="输入搜索关键字">
                 <div class="input-group-append">
-                    <button id="btn-search" class="btn btn-primary" type="submit" onclick="return false">搜&nbsp;&nbsp;索</button>
+                    <button id="btn-search" class="btn btn-primary" type="submit" onclick="return false" disabled>搜&nbsp;&nbsp;索</button>
                 </div>
             </div>
             <p class="mb-0"><small class="text-muted">温馨提醒：当没有找到匹配的记录时，可尝试减少关键字。如：将“是,大臣” 改为 "大臣"，或使用其它译名或英文名称试试。</small></p>
@@ -23,7 +26,7 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<div class="custom-control custom-switch float-right mb-2" data-toggle="tooltip" data-placement="top" title="用于点击下载后，在弹出的确认下载框中，重命名文件名称。">
+<div class="custom-control custom-switch float-right mb-2 mr-1" data-toggle="tooltip" data-placement="top" title="用于点击下载后，在弹出的确认下载框中，重命名文件名称。">
     <input id="ckb-copy" type="checkbox" class="custom-control-input" checked="true">
     <label class="custom-control-label" for="ckb-copy">下载时，拷贝名称至粘贴板</label>
 </div>
