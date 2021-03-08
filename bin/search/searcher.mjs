@@ -52,9 +52,7 @@ const Searcher = (() => {
 
             } else {
 
-                $.ajax({
-                    url: `https://${serverName}.github.io/${serverPath}/index`
-                }).done(data => {
+                HTTP.request(serverName, serverPath, 'index', data => {
 
                     const repos = data.split(",");
                     const repoMap = new Map();
@@ -68,11 +66,10 @@ const Searcher = (() => {
                         i + 1, map, repoMap,
                         keyword, updateData, searchCallback);
 
-                }).fail(e => {
+                }, () => {
 
-                    toastr.error(`请求弹幕服务器：${server} 时，发生错误！`);
-
-                    console.error(e);
+                    trySearchComplate(server, i + 1, map, -1,
+                        keyword, searchCallback);
                 });
             }
         });
@@ -108,9 +105,7 @@ const Searcher = (() => {
 
             } else {
 
-                $.ajax({
-                    url: `https://${serverName}.github.io/${serverPath}/${k}`
-                }).done(data => {
+                HTTP.request(serverName, serverPath, k, data => {
 
                     const repoValue = decrypt(data);
                     const repoData = repoValue.split(";").map(it => it.split(","));
@@ -125,13 +120,7 @@ const Searcher = (() => {
 
                     execSearch(keyword, serverName, k, repoData, updateData);
 
-                }).fail(e => {
-
-                    toastr.error(`请求弹幕仓库：${repo} 时，发生错误！`);
-
-                    console.error(e);
-
-                }).always(() => {
+                }, () => {
 
                     trySearchComplate(server, serverNum, map, ++i,
                         keyword, searchCallback);

@@ -51,7 +51,6 @@ $(() => {
         }
     }
 
-
     /**
      * 搜索完成回调
      * @param {文本} keyword          关键字
@@ -63,7 +62,7 @@ $(() => {
         if (length == 0)
             $("tr.no-records-found td").text(`未找到包含 "${keyword}" 的相关结果。`);
 
-        if ($danmuku_number.attr('title') == undefined) {
+        if (danmukuLength > 0 && $danmuku_number.attr('title') == undefined) {
 
             const prettifyLength = Common.renderSize(danmukuLength);
             $danmuku_number.attr('title', `合计：${prettifyLength}`);
@@ -84,14 +83,19 @@ $(() => {
         $btn_search.attr("disabled", flag);
     });
 
-    // 注册搜索按钮点击事件
-    $btn_search.click(() => {
+    /**
+     * 搜索
+     * @param  {文本} k 关键词
+     */
+    function search(k) {
 
         $table.bootstrapTable('removeAll');
 
-        const keyword = $txt_keyword.val().trim();
+        const keyword = k.trim();
 
         if (keyword.length > 0) {
+
+            history.replaceState(null, null, `search?k=${keyword}`);
 
             $main_form.attr("disabled", true);
 
@@ -99,10 +103,28 @@ $(() => {
 
             Searcher.search(keyword.toLowerCase(), updateData, searchCallback);
         }
-    });
+    }
+
+    // 注册搜索按钮点击事件
+    $btn_search.click(() => search($txt_keyword.val()));
 
     // 解决偶发性国际化失效的bug
     $table.bootstrapTable('refreshOptions', {
         locale: "zh-CN"
     });
+
+    (() => {
+
+        const match = window.location.search.match(new RegExp('k=([^&]*)'));
+
+        if (match) {
+
+            const value = decodeURIComponent(match[1]);
+
+            $txt_keyword.val(value);
+            $btn_search.attr("disabled", false);
+            search(value);
+        }
+
+    })();
 });

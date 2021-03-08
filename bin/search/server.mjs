@@ -1,5 +1,8 @@
 /*jshint esversion: 6 */
 
+/**
+ * 服务器
+ */
 const Server = (() => {
 
     const list = '<#include "/bin/search/list" parse=false>'.split(",");
