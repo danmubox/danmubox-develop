@@ -48,6 +48,7 @@
     </button>
     <div class="dropdown-menu">
         <button class="dropdown-item btn download xl-download">迅雷下载</button>
+        <button class="dropdown-item btn download backup-download">备用地址</button>
     </div>
 </div>
 </script>

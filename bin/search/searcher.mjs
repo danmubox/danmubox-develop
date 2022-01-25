@@ -195,15 +195,17 @@ const Searcher = (() => {
             // 将其转换为小写再进行比较
             if (name.toLowerCase().indexOf(keyword) > -1) {
 
-                // 原始下载地址
-                const url = `https://cdn.jsdelivr.net/gh/${serverName}/${repo}/${it[3]}.7z`;
+                // 文件名称
+                const fileName = `${it[3]}.7z`;
 
                 rows.push({
                     name: name,
                     from: parseFrom(it[2]),
                     length: it[1],
                     operate: downloadOperate,
-                    url: url
+                    serverName:serverName,
+                    repo: repo,
+                    fileName:fileName
                 });
             }
         });

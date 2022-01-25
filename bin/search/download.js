@@ -16,11 +16,22 @@ window.operateEvents = {
         // 当前触发按钮
         const $target = $(e.target);
 
-        let url = row.url;
+        let url;
 
-        // 是否为迅雷下载
-        if ($target.hasClass('xl-download'))
+        // 是否为 「迅雷下载」
+        if ($target.hasClass('xl-download')) {
+
+            url = `https://raw.githubusercontent.com/${row.serverName}/${row.repo}/master/${row.fileName}`;
             url = "thunder://" + btoa(`AA${url}ZZ`);
+
+        } else if ($target.hasClass('backup-download')) {// 是否为 「备用地址」
+
+            url = `https://testingcf.jsdelivr.net/gh/${row.serverName}/${row.repo}/${row.fileName}`;
+
+        } else {
+
+            url = `https://cdn.jsdelivr.net/gh/${row.serverName}/${row.repo}/${row.fileName}`;
+        }
 
 
         const $downloadForm = $("<form method='get'></form>");
