@@ -114,8 +114,10 @@ const DanMuHandler = (() => {
 
             const ps = $it.attr("p").split(",");
 
-            return new DanMuItem($it.text().trim(),
-                ps[0], ps[1], ps[2], ps[3], ps[4], ps[5], ps[6], ps[7]);
+            let text = $it.attr("user") + ": ";
+            text += $it.text().trim();
+
+            return new DanMuItem(text, ps[0], ps[1], ps[2], ps[3], ps[4], ps[5], ps[6], ps[7]);
         }).toArray();
 
         return new DanMu(item.origin, chatId, items);
